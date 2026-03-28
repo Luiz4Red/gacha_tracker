@@ -1555,97 +1555,174 @@
     #importFile {
       display: none;
     }
-    /* Mobile: abaixo de 768px */
-@media (max-width: 768px) {
-  /* Garante que o container principal não esconda o menu */
-  .container {
-    flex-direction: column; /* No mobile, um fica em cima do outro */
-    overflow: hidden;
-  }
-
-  .sidebar {
-    width: 100%;
-    height: auto;
-    z-index: 100; /* Sidebar sempre acima dos painéis */
-    position: relative;
-  }
-
-  .panels {
-    position: relative;
-    height: 100%;
-    width: 100%;
-  }
-
-  .panel {
-    position: fixed; /* Fixa o painel para cobrir a área de conteúdo */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 50; /* Menos que a sidebar */
-    background: var(--bg);
-    display: none;
-    padding-top: 80px; /* Espaço para não ficar atrás do cabeçalho/sidebar se houver */
-  }
-
-  .panel.active {
-    display: block; /* Só mostra o selecionado */
-  }
-}
-    @media(max-width:800px) {
+    /* ── RESPONSIVE: 800px ── */
+    @media (max-width: 800px) {
       .cards-rail {
         width: 150px;
       }
-
-      .bgrid {
+      .bgrid22 {
         grid-template-columns: 1fr 1fr;
       }
-
       .stats-grid {
         grid-template-columns: 1fr 1fr;
       }
     }
 
-    @media(max-width:580px) {
+    /* ── RESPONSIVE: 640px ── */
+    @media (max-width: 640px) {
+      /* Nav: compactar logo e esconder texto dos botões */
+      .nav-logo-text {
+        display: none;
+      }
+      .nav-logo {
+        padding: 0 12px;
+      }
+      .nav-tab {
+        padding: 0 10px;
+        font-size: .65rem;
+        gap: 4px;
+      }
+      .nav-btn {
+        padding: 6px 8px;
+        font-size: .6rem;
+        gap: 3px;
+      }
+      .nav-right {
+        padding: 0 8px;
+        gap: 4px;
+      }
+      /* Esconde texto "Exportar"/"Importar" nos botões da nav */
+      .nav-btn-txt {
+        display: none;
+      }
+
+      /* Tracker layout vira coluna */
       .tracker-layout {
         flex-direction: column;
       }
 
+      /* Cards rail vira carrossel horizontal */
       .cards-rail {
-  width: 100%;
-  height: auto;
-  flex-direction: row;
-  position: relative;
-  overflow-x: auto;
-  overflow-y: visible;  /* ← adiciona isso */
-  padding: 10px 12px;
-  gap: 8px;
-  border-right: none;
-  border-bottom: 1px solid var(--border);
-}
-/* Adiciona também isso no mobile: */
-
-
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        position: sticky;
+        top: 52px;
+        z-index: 100;
+        overflow-x: auto;
+        overflow-y: visible;
+        padding: 10px 12px;
+        gap: 8px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        background: rgba(8, 11, 16, .96);
+        backdrop-filter: blur(10px);
+        scrollbar-width: none;
+      }
+      .cards-rail::-webkit-scrollbar {
+        display: none;
+      }
       .game-card {
-        min-width: 120px;
+        min-width: 110px;
+        flex-shrink: 0;
+      }
+      .game-card img {
+        height: 72px;
       }
 
+      /* Main panel */
       .main-panel {
-        padding: 14px;
+        padding: 14px 12px 56px;
+        overflow-y: visible;
       }
 
-      .bgrid {
-        grid-template-columns: 1fr;
-      }
-
-      .sec2,
-      .pull-grid {
-        grid-template-columns: 1fr;
-      }
-
+      /* Fix background overlay para mobile (sem a sidebar lateral) */
       #main-panel-bg,
       #main-panel-bg-overlay {
         left: 0 !important;
+        top: 52px !important;
+      }
+
+      /* Grids viram 1 coluna */
+      .sec2,
+      .pull-grid,
+      .bgrid22 {
+        grid-template-columns: 1fr;
+      }
+      .sec3 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Pity cells - 2 colunas no mobile */
+      .pity-cells {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      /* Banner page padding */
+      .bpage {
+        padding: 16px 14px 56px;
+      }
+      .bp-header-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .bp-title {
+        font-size: 1.2rem;
+      }
+
+      /* Banner cards menor altura */
+      .bcard {
+        min-height: 200px;
+      }
+      .bcard-content {
+        min-height: 200px;
+      }
+
+      /* Welcome screen */
+      .welcome-sub {
+        font-size: .68rem;
+        padding: 0 16px;
+      }
+
+      /* GP header */
+      .gp-header {
+        margin-bottom: 14px;
+      }
+
+      /* Histórico - ocultar data em telas pequenas */
+      .hist-date {
+        display: none;
+      }
+
+      /* Toggle pity button - menor */
+      .btn-toggle-pity {
+        font-size: .63rem;
+        padding: 6px 12px;
+      }
+    }
+
+    /* ── RESPONSIVE: 400px (telefones bem pequenos) ── */
+    @media (max-width: 400px) {
+      .nav-tab span {
+        display: none;
+      }
+      .nav-tab {
+        padding: 0 8px;
+      }
+      .sec3 {
+        grid-template-columns: 1fr;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .game-card {
+        min-width: 90px;
+      }
+      .game-card img {
+        height: 60px;
       }
     }
 
@@ -1703,7 +1780,7 @@
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        Exportar
+        <span class="nav-btn-txt">Exportar</span>
       </button>
       <button class="nav-btn" onclick="document.getElementById('importFile').click()">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1711,7 +1788,7 @@
           <polyline points="17 8 12 3 7 8" />
           <line x1="12" y1="3" x2="12" y2="15" />
         </svg>
-        Importar
+        <span class="nav-btn-txt">Importar</span>
       </button>
       <input type="file" id="importFile" accept=".json" onchange="importData(this)">
     </div>
@@ -1892,12 +1969,6 @@
     function closeAllPanels() {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-  
-  // No mobile, isso fará a lista de cards (sidebar) reaparecer
-  if(window.innerWidth <= 768) {
-     document.querySelector('.panels').style.display = 'none';
-     document.querySelector('.sidebar').style.display = 'flex';
-  }
 }
     // ── IMAGES (embed once here, reference everywhere else via JS) ──
     const IMG = {
@@ -1968,6 +2039,13 @@
       }
       if (mo) mo.style.opacity = "1";
       prefillForm(id);
+      // On mobile, scroll to the content below the cards rail
+      if (window.innerWidth <= 640) {
+        setTimeout(() => {
+          const mp = document.querySelector('.main-panel');
+          if (mp) mp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 80);
+      }
     }
 
     // ── BUILD PANELS ──
