@@ -1,0 +1,5 @@
+genshin
+gspread
+oauth2client
+flask
+asyncer
