@@ -2017,6 +2017,74 @@
     grid-template-columns: 1fr;
   }
 }
+.daily-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(var(--aR), var(--aG), var(--aB), 0.08);
+      border: 1px solid var(--border2);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .daily-container.is-done {
+      opacity: 0.5;
+      filter: grayscale(0.8);
+      border-style: dashed;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .daily-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .daily-icon-status {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .is-done .daily-icon-status {
+      background: var(--green);
+      box-shadow: none;
+    }
+
+    .daily-text {
+      font-family: "Rajdhani", sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .btn-daily-check {
+      background: var(--card);
+      border: 1px solid var(--accent);
+      color: var(--accent2);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+
+    .btn-daily-check:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-daily-check.done {
+      border-color: var(--green);
+      color: var(--green);
+      cursor: default;
+    }
   </style>
 </head>
 
@@ -2397,6 +2465,7 @@ function buildStatsRail() {
     function selectGame(id) {
   if (!id) return;
   activeGame = id;
+  updateDailyUI(id);
 
   // Define o atributo no body para mudar as cores do tema
   document.body.setAttribute("data-game", id);
@@ -2466,6 +2535,15 @@ function buildStatsRail() {
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
         Tracker externo ↗
       </a>
+       <div class="daily-container" id="daily-row-${g.id}">
+        <div class="daily-info">
+          <div class="daily-icon-status"></div>
+          <div class="daily-text">Missões Diárias</div>
+        </div>
+        <button class="btn-daily-check" id="daily-btn-${g.id}" onclick="markDailyDone('${g.id}')">
+          Concluida
+        </button>
+      </div>
       <div class="sec2">
         <div class="pblock" id="cdb-${g.id}">
           <div class="pblock-title">
@@ -3383,6 +3461,42 @@ function generateSingleStatHTML(id) {
         selectStatsGame(activeStatsTab);
       }
     };
+    // Função para pegar a data atual formatada (YYYY-MM-DD)
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+    }
+
+    // Marca como feito ou reseta se for um novo dia
+    function updateDailyUI(id) {
+      const dailyData = S.get(id + "_daily", { lastDone: "" });
+      const container = document.getElementById(`daily-row-${id}`);
+      const btn = document.getElementById(`daily-btn-${id}`);
+      const today = getTodayKey();
+
+      if (dailyData.lastDone === today) {
+        container.classList.add("is-done");
+        btn.textContent = "CONCLUÍDO";
+        btn.classList.add("done");
+        btn.disabled = true;
+      } else {
+        container.classList.remove("is-done");
+        btn.textContent = "MARCAR FEITO";
+        btn.classList.remove("done");
+        btn.disabled = false;
+      }
+    }
+
+    // Ação do botão
+    function markDailyDone(id) {
+      const today = getTodayKey();
+      S.set(id + "_daily", { lastDone: today });
+      updateDailyUI(id);
+      
+      // Feedback visual opcional
+      const btn = document.getElementById(`daily-btn-${id}`);
+      btn.textContent = "✓ FEITO";
+    }
   </script>
 </body>
 
