@@ -2586,29 +2586,73 @@
 
     if (!label) return alert("Digite o seu ID!");
 
-    statusEl.textContent = "📡 Buscando dados no servidor...";
+    statusEl.textContent = "📡 Sincronizando com a nuvem...";
     statusEl.style.color = "var(--gold)";
 
+    // 1. BUSCA DADOS EXISTENTES (UIDs e Resina)
     const account = await CloudSync.fetchFromRender(label);
 
-    if (account) {
-        // Preenche os UIDs vindos da planilha
-        if(document.getElementById('cloud-gs')) document.getElementById('cloud-gs').value = account.uid_gs || "";
-        if(document.getElementById('cloud-hsr')) document.getElementById('cloud-hsr').value = account.uid_hsr || "";
-        if(document.getElementById('cloud-zzz')) document.getElementById('cloud-zzz').value = account.uid_zzz || "";
+      if (account) {
+        // --- PARTE A: PUXAR DA NUVEM PARA O PC ---
+        if (account.sitedata && account.sitedata !== "") {
+            try {
+                const cloudBackup = JSON.parse(account.sitedata);
+                // Salva TUDO o que veio da nuvem no computador atual
+                Object.entries(cloudBackup).forEach(([key, value]) => {
+                    localStorage.setItem(key, value);
+                });
+                console.log("Restaurado da nuvem: Pity, Histórico e Countdowns.");
+            } catch (e) {
+                console.error("Erro ao processar backup da nuvem:", e);
+            }
+        }
+         const fullLocalData = {};
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('gt_')) {
+                fullLocalData[key] = localStorage.getItem(key);
+            }
+        }
+        try {
+            await fetch(`${RENDER_URL}/save/${encodeURIComponent(label)}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(localData)
+            });
+            console.log("Backup enviado para a planilha.");
+        } catch (e) {
+            console.error("Erro ao salvar backup:", e);
+        }
 
-        // Salva o ID para o Live Status usar
+        // 3. SE A PLANILHA JÁ TINHA UM BACKUP, RESTAURA PARA O NAVEGADOR
+        if (account.sitedata) {
+            try {
+                const cloudPity = JSON.parse(account.sitedata);
+                Object.entries(cloudPity).forEach(([key, value]) => {
+                    localStorage.setItem("gt_" + key, value);
+                });
+            } catch (e) {}
+        }
+
+        // 4. FINALIZA INTERFACE
         localStorage.setItem('gt_sync_label', label);
-
-        statusEl.textContent = "✅ Sincronizado com sucesso!";
+        statusEl.textContent = "✅ Nuvem 100% Sincronizada!";
         statusEl.style.color = "var(--green)";
-        
         CloudSync.lockUI(true);
         
-        // Se já houver um jogo aberto, atualiza a resina
-        if (activeGame) updateLiveStatusUI();
+       // Atualiza todos os cards de Pity, Histórico e Resina visualmente
+        GAMES.forEach(g => {
+            refreshPity(g.id);
+            renderHistory(g.id);
+            // Reinicia countdowns se necessário
+            const ts = localStorage.getItem(`gt_${g.id}_ts`);
+            if (ts) startCountdown(g.id, parseInt(ts));
+        });
+        
+        updateLiveStatusUI(); // Atualiza resina/diárias
+        
     } else {
-        statusEl.textContent = "❌ ID '" + label + "' não encontrado no banco de dados.";
+        statusEl.textContent = "❌ ID não encontrado.";
         statusEl.style.color = "var(--red)";
     }
 }
