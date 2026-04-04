@@ -77,17 +77,20 @@
     }
 
     [data-game="zzz"] {
---accent: #00f5f5;   /* Cor principal (Hex) */
-    --accent2: #5effff;  /* Cor de brilho mais clara */
-    --aR: 0; 
-    --aG: 245;
-    --aB: 245;
-       --card: #0a1111;     /* Tom escuro do card baseado na nova cor */
-    --card2: #101a1a;
+      --accent: #00f5f5;
+      /* Cor principal (Hex) */
+      --accent2: #5effff;
+      /* Cor de brilho mais clara */
+      --aR: 0;
+      --aG: 245;
+      --aB: 245;
+      --card: #0a1111;
+      /* Tom escuro do card baseado na nova cor */
+      --card2: #101a1a;
       --card3: #0a0a0b;
       --border: rgba(0, 245, 245, 0.15);
-    --border2: rgba(0, 245, 245, 0.30);
-    --text: #e0f8f8;
+      --border2: rgba(0, 245, 245, 0.30);
+      --text: #e0f8f8;
       --muted: #484840;
       --muted2: #888870;
     }
@@ -1602,42 +1605,55 @@
 
     /* ── RESPONSIVE: 640px ── */
     @media (max-width: 640px) {
-    .nav-logo-text { display: none; }
-    .nav-logo { padding: 0 12px; }
+      .nav-logo-text {
+        display: none;
+      }
 
-    /* Correção das abas para não sumirem no canto */
-    .nav-tabs {
+      .nav-logo {
+        padding: 0 12px;
+      }
+
+      /* Correção das abas para não sumirem no canto */
+      .nav-tabs {
         overflow-x: auto;
         display: flex;
         flex: 1;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
-    }
-    .nav-tabs::-webkit-scrollbar { display: none; }
+      }
 
-    .nav-tab {
+      .nav-tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-tab {
         padding: 0 10px;
         font-size: .65rem;
         gap: 4px;
-        white-space: nowrap; /* Impede que o texto quebre */
-    }
+        white-space: nowrap;
+        /* Impede que o texto quebre */
+      }
 
-    .nav-btn {
+      .nav-btn {
         padding: 6px 8px;
         font-size: .6rem;
         gap: 3px;
-    }
+      }
 
-    .nav-right {
+      .nav-right {
         padding: 0 8px;
         gap: 4px;
-    }
+      }
 
-    .nav-btn-txt { display: none; }
+      .nav-btn-txt {
+        display: none;
+      }
 
-    .tracker-layout { flex-direction: column; }
+      .tracker-layout {
+        flex-direction: column;
+      }
 
-    .cards-rail {
+      .cards-rail {
         width: 100%;
         height: auto;
         flex-direction: row;
@@ -1653,35 +1669,90 @@
         background: rgba(8, 11, 16, .96);
         backdrop-filter: blur(10px);
         scrollbar-width: none;
-    }
-    .cards-rail::-webkit-scrollbar { display: none; }
+      }
 
-    .game-card { min-width: 110px; flex-shrink: 0; }
-    .game-card img { height: 72px; }
+      .cards-rail::-webkit-scrollbar {
+        display: none;
+      }
 
-    .main-panel { padding: 14px 12px 56px; overflow-y: visible; }
+      .game-card {
+        min-width: 110px;
+        flex-shrink: 0;
+      }
 
-    #main-panel-bg, #main-panel-bg-overlay {
+      .game-card img {
+        height: 72px;
+      }
+
+      .main-panel {
+        padding: 14px 12px 56px;
+        overflow-y: visible;
+      }
+
+      #main-panel-bg,
+      #main-panel-bg-overlay {
         left: 0 !important;
         top: 52px !important;
+      }
+
+      .sec2,
+      .pull-grid,
+      .bgrid22 {
+        grid-template-columns: 1fr;
+      }
+
+      .sec3 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .pity-cells {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bpage {
+        padding: 16px 14px 56px;
+      }
+
+      .bp-header-row {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .bp-title {
+        font-size: 1.2rem;
+      }
+
+      .bcard {
+        min-height: 200px;
+      }
+
+      .bcard-content {
+        min-height: 200px;
+      }
+
+      .welcome-sub {
+        font-size: .68rem;
+        padding: 0 16px;
+      }
+
+      .gp-header {
+        margin-bottom: 14px;
+      }
+
+      .hist-date {
+        display: none;
+      }
+
+      .btn-toggle-pity {
+        font-size: .63rem;
+        padding: 6px 12px;
+      }
     }
 
-    .sec2, .pull-grid, .bgrid22 { grid-template-columns: 1fr; }
-    .sec3 { grid-template-columns: 1fr 1fr; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
-    .pity-cells { grid-template-columns: repeat(2, 1fr); }
-
-    .bpage { padding: 16px 14px 56px; }
-    .bp-header-row { flex-direction: column; gap: 10px; }
-    .bp-title { font-size: 1.2rem; }
-
-    .bcard { min-height: 200px; }
-    .bcard-content { min-height: 200px; }
-    .welcome-sub { font-size: .68rem; padding: 0 16px; }
-    .gp-header { margin-bottom: 14px; }
-    .hist-date { display: none; }
-    .btn-toggle-pity { font-size: .63rem; padding: 6px 12px; }
-}
     /* ── RESPONSIVE: 400px ── */
     @media (max-width: 400px) {
       .nav-tab span {
@@ -2401,13 +2472,13 @@
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
     }
-//<a href="https://ibb.co/wFfgT3W0"><img src="https://i.ibb.co/G4qpXB2x/arknightsendfield-1ecp7.png" alt="arknightsendfield-1ecp7" border="0" /></a>
-//     // ── IMAGES (embed once here, reference everywhere else via JS) ──
+    //<a href="https://ibb.co/wFfgT3W0"><img src="https://i.ibb.co/G4qpXB2x/arknightsendfield-1ecp7.png" alt="arknightsendfield-1ecp7" border="0" /></a>
+    //     // ── IMAGES (embed once here, reference everywhere else via JS) ──
     const IMG = {
       genshin: "https://i.ibb.co/60Ls3TmQ/5d2ba4371115d26de4c574b28311aed8-576844151847376526.jpg",
       hsr: "https://i.ibb.co/0VFgQHtT/3c862d085db721a5625b6e12649399bc-8067514115196038699.png",
       zzz: "https://i.ibb.co/WZs6LX2/3ba9a74bbed3272ff0a14e861e1e8418-8953409163702722405.png",
-      endfield:"https://i.ibb.co/G4qpXB2x/arknightsendfield-1ecp7.png",
+      endfield: "https://i.ibb.co/G4qpXB2x/arknightsendfield-1ecp7.png",
     };
 
     // ── CONFIG ──
@@ -2419,9 +2490,8 @@
     ];
     const RENEW = 21;
     const MAX_HIST = 5;
-    const RENDER_URL = 'https://gacha-tracker-priv.onrender.com/data';
-    const SHEETY_BASE_URL = 'https://api.sheety.co/9be044ec19a287ce78d80833bdb42abc/dbTracker/página1';
-    const SHEETY_TOKEN = '377b2eda5bfca5c2a5e8048e5730409dbc33dcdf';
+    const RENDER_URL = 'https://gacha-tracker-priv.onrender.com';
+
 
     // Constrói a rail de stats (chamar quando entrar na página)
     function buildStatsRail() {
@@ -2510,27 +2580,38 @@
     }
 
     async function performCloudSync() {
-      const label = document.getElementById('sync-id-input').value.trim();
-      if (!label) return alert("Digite o ID!");
-      const statusEl = document.getElementById('cloud-status-msg');
-      statusEl.textContent = "Sincronizando...";
+    const labelInput = document.getElementById('sync-id-input');
+    const label = labelInput.value.trim();
+    const statusEl = document.getElementById('cloud-status-msg');
 
-      const account = await CloudSync.fetchFromRender(label);
-      if (!account) { statusEl.textContent = "❌ ID não encontrado."; return; }
+    if (!label) return alert("Digite o seu ID!");
 
-      const cloudRow = await CloudSync.fetchByLabel(label);
-      if (cloudRow && cloudRow.siteData && confirm("Restaurar backup da nuvem?")) {
-        CloudSync.unpackCloudData(cloudRow.siteData);
+    statusEl.textContent = "📡 Buscando dados no servidor...";
+    statusEl.style.color = "var(--gold)";
+
+    const account = await CloudSync.fetchFromRender(label);
+
+    if (account) {
+        // Preenche os UIDs vindos da planilha
+        if(document.getElementById('cloud-gs')) document.getElementById('cloud-gs').value = account.uid_gs || "";
+        if(document.getElementById('cloud-hsr')) document.getElementById('cloud-hsr').value = account.uid_hsr || "";
+        if(document.getElementById('cloud-zzz')) document.getElementById('cloud-zzz').value = account.uid_zzz || "";
+
+        // Salva o ID para o Live Status usar
         localStorage.setItem('gt_sync_label', label);
-        location.reload();
-        return;
-      }
 
-      localStorage.setItem('gt_sync_label', label);
-      statusEl.textContent = "✓ Sincronizado!";
-      CloudSync.lockUI(true);
+        statusEl.textContent = "✅ Sincronizado com sucesso!";
+        statusEl.style.color = "var(--green)";
+        
+        CloudSync.lockUI(true);
+        
+        // Se já houver um jogo aberto, atualiza a resina
+        if (activeGame) updateLiveStatusUI();
+    } else {
+        statusEl.textContent = "❌ ID '" + label + "' não encontrado no banco de dados.";
+        statusEl.style.color = "var(--red)";
     }
-
+}
     // ── SELECT GAME ──
     function selectGame(id) {
       if (!id) return;
@@ -2553,18 +2634,18 @@
 
     // ── BUILD PANELS ──
     function buildPanels() {
-       const wrap = document.getElementById("panels-wrap");
-  wrap.innerHTML = ""; // Limpa antes de gerar
+      const wrap = document.getElementById("panels-wrap");
+      wrap.innerHTML = ""; // Limpa antes de gerar
 
-  GAMES.forEach(g => {
-    const div = document.createElement("div");
-    div.className = "game-panel";
-    div.id = "gp-" + g.id;
+      GAMES.forEach(g => {
+        const div = document.createElement("div");
+        div.className = "game-panel";
+        div.id = "gp-" + g.id;
 
-    // --- SÓ GERA O LIVE STATUS SE NÃO FOR ENDFIELD ---
-    let liveStatusHtml = "";
-    if (g.id !== "endfield") {
-      liveStatusHtml = `
+        // --- SÓ GERA O LIVE STATUS SE NÃO FOR ENDFIELD ---
+        let liveStatusHtml = "";
+        if (g.id !== "endfield") {
+          liveStatusHtml = `
         <div id="live-status-container-${g.id}" class="pblock live-status-card" style="margin-bottom: 14px; border: 1px solid var(--accent); background: rgba(var(--aR), var(--aG), var(--aB), 0.05); position: relative;">
             <div class="pblock-title" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <span>📡 Status em Tempo Real</span>
@@ -2584,7 +2665,7 @@
                 Sincronizar Agora
             </button>
         </div>`;
-    }
+        }
 
         div.innerHTML = `
       <div class="gp-header">
@@ -2698,16 +2779,16 @@
       });
     }
     // Chame isso após buildPanels() no final do arquivo
-function setupImages() {
-    Object.keys(IMG).forEach(k => {
+    function setupImages() {
+      Object.keys(IMG).forEach(k => {
         const railImg = document.querySelector(`#gc-${k} img`);
         if (railImg) railImg.src = IMG[k];
-    });
-}
+      });
+    }
 
-// Chame no final:
-buildPanels();
-setupImages();
+    // Chame no final:
+    buildPanels();
+    setupImages();
 
     // ── FIFTY RADIO ──
     function selFifty(gameId, val) {
@@ -3365,28 +3446,28 @@ Gerado em: ${new Date().toLocaleString()}
     }
 
     // Seleciona o jogo na aba de estatísticas
-   function selectStatsGame(id) {
-    statsGameA = id;
-    statsGameB = null; 
-    
-    // Atualiza a barra lateral (Rail) de estatísticas
-    document.querySelectorAll("#stats-rail .game-card").forEach(c => c.classList.remove("active"));
-    const selectedCard = document.getElementById("gs-" + id);
-    if (selectedCard) selectedCard.classList.add("active");
-    
-    // UI
-    document.getElementById("stats-welcome").style.display = "none";
-    document.getElementById("stats-content-area").style.display = "block";
-    
-    renderStatsView();
-}
+    function selectStatsGame(id) {
+      statsGameA = id;
+      statsGameB = null;
+
+      // Atualiza a barra lateral (Rail) de estatísticas
+      document.querySelectorAll("#stats-rail .game-card").forEach(c => c.classList.remove("active"));
+      const selectedCard = document.getElementById("gs-" + id);
+      if (selectedCard) selectedCard.classList.add("active");
+
+      // UI
+      document.getElementById("stats-welcome").style.display = "none";
+      document.getElementById("stats-content-area").style.display = "block";
+
+      renderStatsView();
+    }
     // Renderiza a área interna de estatísticas com botão de comparar
     function renderStatsView() {
-    const area = document.getElementById("stats-content-area");
-    const gA = GAMES.find(x => x.id === statsGameA);
-    const themeColor = GAME_THEME_COLORS[gA.name] || "var(--accent)";
+      const area = document.getElementById("stats-content-area");
+      const gA = GAMES.find(x => x.id === statsGameA);
+      const themeColor = GAME_THEME_COLORS[gA.name] || "var(--accent)";
 
-    area.innerHTML = `
+      area.innerHTML = `
         <!-- CABEÇALHO ESTILO TRACKER -->
         <div class="gp-header">
             <div class="gp-icon" style="border-color: ${themeColor}; box-shadow: 0 0 12px ${themeColor}44">
@@ -3412,25 +3493,25 @@ Gerado em: ${new Date().toLocaleString()}
             </select>
         </div>
     `;
-}
+    }
     // Função auxiliar para os quadradinhos de status
     function generateSingleStatHTML(id) {
-    const g = GAMES.find(x => x.id === id);
-    const hist = S.get(id + "_history", []);
-    const themeColor = GAME_THEME_COLORS[g.name] || "var(--accent)";
-    
-    // Se não tiver dados, mostra aviso
-    if (hist.length === 0) {
+      const g = GAMES.find(x => x.id === id);
+      const hist = S.get(id + "_history", []);
+      const themeColor = GAME_THEME_COLORS[g.name] || "var(--accent)";
+
+      // Se não tiver dados, mostra aviso
+      if (hist.length === 0) {
         return `<div class="pblock" style="border: 1px dashed var(--border); text-align: center; padding: 20px; color: var(--muted2); font-size: 0.8rem;">
                     Nenhum pull 5★ registrado no histórico de ${g.short}.
                 </div>`;
-    }
+      }
 
-    const avg = (hist.reduce((s, h) => s + (h.pullPity || 0), 0) / hist.length).toFixed(1);
-    const wins = hist.filter(h => h.fifty === "W").length;
-    const loss = hist.filter(h => h.fifty === "L").length;
+      const avg = (hist.reduce((s, h) => s + (h.pullPity || 0), 0) / hist.length).toFixed(1);
+      const wins = hist.filter(h => h.fifty === "W").length;
+      const loss = hist.filter(h => h.fifty === "L").length;
 
-    return `
+      return `
         <div class="pblock" style="border-color: ${themeColor}66; background: ${themeColor}05;">
             <div class="pblock-title" style="color: ${themeColor}; font-size: 0.65rem; margin-bottom: 12px;">${g.short.toUpperCase()}</div>
             <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
@@ -3449,7 +3530,7 @@ Gerado em: ${new Date().toLocaleString()}
             </div>
         </div>
     `;
-}
+    }
 
     function startComparison(idB) {
       if (!idB) return;
@@ -3514,14 +3595,37 @@ Gerado em: ${new Date().toLocaleString()}
 
     // --- OBJETO DE SINCRONIZAÇÃO (CloudSync) ---
     const CloudSync = {
-      getDeviceId: function () {
-        let deviceId = localStorage.getItem('gt_device_uuid');
-        if (!deviceId) {
-          deviceId = 'SYNC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-          localStorage.setItem('gt_device_uuid', deviceId);
+           fetchByLabel: async function (label) {
+        if (!label) return null;
+        try {
+            // O encodeURIComponent protege contra espaços e caracteres especiais
+            const url = `${RENDER_URL}/data/${encodeURIComponent(label.trim())}`;
+            const res = await fetch(url);
+            const data = await res.json();
+            
+            if (data && !data.error) {
+                return data; 
+            }
+            return null;
+        } catch (e) {
+            console.error("Erro na busca:", e);
+            return null;
         }
-        return deviceId;
-      },
+    },
+      fetchFromRender: async function (label) {
+        try {
+            const url = `${RENDER_URL}/data/${encodeURIComponent(label.trim())}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            // Se o servidor devolver erro, retorna null
+            if (data.error) return null;
+            return data;
+        } catch (e) {
+            console.error("Erro na conexão com o Render:", e);
+            return null;
+        }
+    },
       generateNewId: function () {
         const newId = 'SYNC-' + Math.random().toString(36).substr(2, 9).toUpperCase();
         document.getElementById('sync-id-input').value = newId;
@@ -3541,107 +3645,69 @@ Gerado em: ${new Date().toLocaleString()}
           Object.entries(data).forEach(([key, value]) => localStorage.setItem(key, value));
         } catch (e) { console.error(e); }
       },
-      fetchByLabel: async function (label) {
-        if (!label) return null;
-        try {
-          const res = await fetch(SHEETY_BASE_URL, {
-            headers: { 'Authorization': `Bearer ${SHEETY_TOKEN}` }
-          });
-          const data = await res.json();
-          if (data && data.página1) {
-            return data.página1.find(row => row.label === label);
-          }
-          return null;
-        } catch (e) {
-          console.error("Erro ao buscar no Sheety:", e);
-          return null;
-        }
-      },
-      fetchFromRender: async function (label) {
-        try {
-          const response = await fetch(RENDER_URL);
-          const allAccounts = await response.json();
-          return allAccounts.find(acc => acc.label === label);
-        } catch (e) { return null; }
-      },
-      lockUI: function (isLocked) {
-        const fields = ['cloud-ltuid', 'cloud-ltoken', 'cloud-gs', 'cloud-hsr', 'cloud-zzz', 'sync-id-input'];
+
+       lockUI: function (isLocked) {
+        const fields = ['cloud-gs', 'cloud-hsr', 'cloud-zzz', 'sync-id-input'];
         fields.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) {
-            el.disabled = isLocked; // Impede a edição
-            // Transforma ltuid e ltoken em bolinhas (password)
-            if (id.includes('ltoken') || id.includes('ltuid')) {
-              el.type = isLocked ? "password" : "text";
-            }
-          }
+            const el = document.getElementById(id);
+            if (el) el.disabled = isLocked;
         });
         const btnMain = document.getElementById('btn-cloud-main');
         const btnEdit = document.getElementById('btn-cloud-edit');
         if (btnMain) btnMain.style.display = isLocked ? 'none' : 'block';
         if (btnEdit) btnEdit.style.display = isLocked ? 'block' : 'none';
-      },
-    };
+    }
+};
 
 
     // --- FUNÇÕES DE INTERFACE GLOBAIS ---
-
-    async function syncByLabel() {
-      const labelInput = document.getElementById('sync-id-input');
-      const label = labelInput.value.trim();
-      const statusEl = document.getElementById('cloud-status-msg');
-
-      if (!label) return alert("Digite o seu ID (Label)");
-
-      statusEl.textContent = "Buscando dados no servidor...";
-      statusEl.style.color = "var(--gold)";
-
       // 1. Busca as credenciais e UIDs no servidor RENDER
-      const account = await CloudSync.fetchFromRender(label);
+      // FUNÇÃO DO BOTÃO "SINCRONIZAR E PROTEGER DADOS"
+async function syncByLabel() {
+    const labelInput = document.getElementById('sync-id-input');
+    const label = labelInput.value.trim(); // Remove espaços antes de enviar
+    const statusEl = document.getElementById('cloud-status-msg');
 
-      if (account) {
-        // PREENCHIMENTO DOS CAMPOS PARA CONFIRMAÇÃO DO USUÁRIO
-        // Preenche os UIDs vindos do servidor
-        document.getElementById('cloud-gs').value = account.uid_gs || "";
-        document.getElementById('cloud-hsr').value = account.uid_hsr || "";
-        document.getElementById('cloud-zzz').value = account.uid_zzz || "";
+    if (!label) return alert("Digite o seu ID!");
 
-        // Preenche os tokens (eles ficarão visíveis por 1 segundo antes do lockUI esconder)
-        document.getElementById('cloud-ltuid').value = account.ltuid_v2;
-        document.getElementById('cloud-ltoken').value = account.ltoken_v2;
+    statusEl.textContent = "📡 Conectando ao servidor...";
+    statusEl.style.color = "var(--gold)";
 
-        // 2. Busca o backup de Pities/Countdowns no SHEETY
-        const cloudRow = await CloudSync.fetchByLabel(label);
+    try {
+        // Envia o ID limpo para o Render
+        const response = await fetch(`${RENDER_URL}/data/${encodeURIComponent(label)}`);
+        const account = await response.json();
 
-        if (cloudRow && cloudRow.siteData) {
-          if (confirm("✓ Conta encontrada!\n\nTambém detectamos um backup de Pities e Countdowns na nuvem. Deseja restaurar seu progresso agora?")) {
-            CloudSync.unpackCloudData(cloudRow.siteData);
+        // Se o servidor retornar algo que NÃO tenha erro
+        if (account && !account.error) {
+            
+            // Preenche os campos de UID (Genshin, HSR, ZZZ)
+            if(document.getElementById('cloud-gs')) document.getElementById('cloud-gs').value = account.uid_gs || "";
+            if(document.getElementById('cloud-hsr')) document.getElementById('cloud-hsr').value = account.uid_hsr || "";
+            if(document.getElementById('cloud-zzz')) document.getElementById('cloud-zzz').value = account.uid_zzz || "";
+
+            // Salva o ID no seu navegador para uso futuro
             localStorage.setItem('gt_sync_label', label);
-            alert("✓ Tudo pronto! O site será reiniciado com seus dados.");
-            location.reload();
-            return;
-          }
+            
+            statusEl.textContent = "✅ ID Identificado e Sincronizado!";
+            statusEl.style.color = "var(--green)";
+            
+            // Bloqueia os campos para proteção
+            if (typeof CloudSync !== 'undefined') CloudSync.lockUI(true);
+            
+            // Carrega a Resina imediatamente
+            updateLiveStatusUI();
+            
+        } else {
+            statusEl.textContent = "❌ Erro: O ID '" + label + "' não existe na planilha.";
+            statusEl.style.color = "var(--red)";
+            localStorage.removeItem('gt_sync_label');
         }
-
-        // Caso o usuário não tenha backup ou cancele a restauração, 
-        // apenas vinculamos o ID para mostrar o "Status Live"
-        localStorage.setItem('gt_sync_label', label);
-
-        statusEl.textContent = "✓ ID Vinculado! Protegendo dados...";
-        statusEl.style.color = "var(--green)";
-
-        // Pequeno delay para o usuário ver os campos preenchidos antes de mascarar
-        setTimeout(() => {
-          CloudSync.lockUI(true); // Esconde os tokens e desabilita campos
-          if (typeof updateLiveStatusUI === "function") updateLiveStatusUI();
-        }, 1000);
-
-      } else {
-        statusEl.textContent = "❌ ID (Label) não encontrado no banco de dados.";
-        statusEl.style.color = "var(--red)";
-      }
+    } catch (e) {
+        statusEl.textContent = "❌ Erro crítico de conexão com o Render.";
+        console.error(e);
     }
-
+}
     // Função de Edição da Nuvem
     function unlockCloudFields() {
       CloudSync.lockUI(false);
@@ -3672,25 +3738,20 @@ Gerado em: ${new Date().toLocaleString()}
     }
 
     function updateDailyUI(id) {
-      const dailyData = S.get(id + "_daily", { lastDone: "" });
-      const container = document.getElementById(`daily-row-${id}`);
-      const btn = document.getElementById(`daily-btn-${id}`);
-      const today = getTodayKey();
-
-      if (container && btn) {
+    const dailyData = S.get(id + "_daily", { lastDone: "" });
+    const container = document.getElementById(`daily-row-${id}`);
+    const btn = document.getElementById(`daily-btn-${id}`);
+    
+    // Como usamos o sistema de Live Status agora, essa função pode ser simples
+    // apenas para garantir que o selectGame não quebre.
+    if (btn) {
+        const today = new Date().toLocaleDateString();
         if (dailyData.lastDone === today) {
-          container.classList.add("is-done");
-          btn.textContent = "CONCLUÍDO";
-          btn.classList.add("done");
-          btn.disabled = true;
-        } else {
-          container.classList.remove("is-done");
-          btn.textContent = "MARCAR FEITO";
-          btn.classList.remove("done");
-          btn.disabled = false;
+            btn.textContent = "CONCLUÍDO";
+            btn.classList.add("done");
         }
-      }
     }
+}
 
     function markDailyDone(id) {
       const today = getTodayKey();
@@ -3735,81 +3796,65 @@ Gerado em: ${new Date().toLocaleString()}
       });
     });
     // Adicione esta função ao seu objeto CloudSync ou Scripts globais
-    async function updateLiveStatusUI() {
+ async function updateLiveStatusUI() {
     const syncLabel = localStorage.getItem('gt_sync_label');
-    if (!syncLabel || !activeGame) return;
-
-    const container = document.getElementById(`live-status-container-${activeGame}`);
-    if (!container) return;
+    if (!syncLabel || !activeGame || activeGame === 'endfield') return;
 
     try {
-        // Busca os dados da nuvem (Sheety ou Render)
-        const data = await CloudSync.fetchByLabel(syncLabel);
-        // O Sheety pode retornar livedata ou liveData dependendo da configuração
-        const rawJson = data.liveData || data.livedata;
-
-        if (data && rawJson) {
-            const live = JSON.parse(rawJson);
-            // Mapeamento: Genshin no Python é 'gs'
+        const accountData = await CloudSync.fetchByLabel(syncLabel);
+        
+        if (accountData && accountData.results) {
+            const live = JSON.parse(accountData.results);
             const keyMap = { "genshin": "gs", "hsr": "hsr", "zzz": "zzz" };
             const gameInfo = live[keyMap[activeGame]];
 
             if (gameInfo && gameInfo !== "N/A") {
-                // CORREÇÃO DOS NOMES DAS CHAVES (resin e daily conforme seu Python)
-                const resinVal = gameInfo.resin || gameInfo.stamina || gameInfo.energy || "--";
-                const dailyVal = gameInfo.daily || "--";
-
-                document.getElementById(`live-resina-${activeGame}`).textContent = resinVal;
-                document.getElementById(`live-diaria-${activeGame}`).textContent = dailyVal;
-
-                // Estilização da diária
+                const resinaEl = document.getElementById(`live-resina-${activeGame}`);
                 const diariaEl = document.getElementById(`live-diaria-${activeGame}`);
-                const isDone = dailyVal.includes("4/4") || dailyVal.includes("500/500") || dailyVal.includes("400/400") || dailyVal.toLowerCase().includes("done");
-                diariaEl.style.color = isDone ? "var(--green)" : "var(--gold)";
+                const timeEl = document.getElementById(`live-update-time-${activeGame}`);
 
-                // Atualiza o horário
-                const now = new Date();
-                const timeStr = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
-                document.getElementById(`live-update-time-${activeGame}`).textContent = `Visto às ${timeStr}`;
+                if (resinaEl) resinaEl.textContent = gameInfo.resin || gameInfo.stamina || gameInfo.energy || "--";
+                if (diariaEl) {
+                    diariaEl.textContent = gameInfo.daily || "--";
+                    const isDone = diariaEl.textContent.includes("4/4") || diariaEl.textContent.includes("500/500") || diariaEl.textContent.includes("400/400");
+                    diariaEl.style.color = isDone ? "var(--green)" : "var(--gold)";
+                }
+                if (timeEl) {
+                    const now = new Date();
+                    timeEl.textContent = `Visto às ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                }
             }
         }
     } catch (e) {
-        console.error("Erro ao atualizar Live Status:", e);
+        console.error("Erro ao carregar Live Status:", e);
     }
 }
-// --- FUNÇÃO PARA O BOTÃO DE RELOAD (RENDER /RUN) ---
+    // --- FUNÇÃO PARA O BOTÃO DE RELOAD (RENDER /RUN) ---
 
-async function triggerManualSync() {
+    async function triggerManualSync() {
+    if (!activeGame || activeGame === 'endfield') return;
     const btn = document.getElementById(`btn-sync-live-${activeGame}`);
     if (!btn || btn.disabled) return;
 
-    const syncUrl = "https://gacha-tracker-priv.onrender.com/run";
-
     try {
-        // 1. Avisa o servidor para rodar
         btn.disabled = true;
-        btn.textContent = "Solicitando ao servidor...";
-        
-        await fetch(syncUrl); // Dispara o /run no Render
+        btn.textContent = "Solicitando...";
+        await fetch(`${RENDER_URL}/run`);
 
-        // 2. Inicia contador de 60 segundos
         let seconds = 60;
         const timer = setInterval(() => {
             seconds--;
-            btn.textContent = `Sincronizando... (${seconds}s)`;
-            
+            btn.textContent = `Aguarde (${seconds}s)`;
             if (seconds <= 0) {
                 clearInterval(timer);
                 btn.disabled = false;
-                btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:5px;"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Sincronizar com HoYoLAB`;
-                updateLiveStatusUI(); // Tenta atualizar a UI após o tempo
+                btn.textContent = "Sincronizar Agora";
+                updateLiveStatusUI();
             }
         }, 1000);
-
     } catch (e) {
         btn.disabled = false;
-        btn.textContent = "Erro ao conectar";
-        console.error("Erro no Sync Manual:", e);
+        btn.textContent = "Erro";
     }
 }
   </script>
