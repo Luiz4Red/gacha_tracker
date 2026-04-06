@@ -2579,81 +2579,64 @@
       renderMonthlySummary();
     }
 
-    async function performCloudSync() {
+async function performCloudSync() {
     const labelInput = document.getElementById('sync-id-input');
     const label = labelInput.value.trim();
     const statusEl = document.getElementById('cloud-status-msg');
 
     if (!label) return alert("Digite o seu ID!");
 
-    statusEl.textContent = "📡 Sincronizando com a nuvem...";
+    // SALVA LOGO NO INÍCIO para garantir que o navegador não esqueça
+    localStorage.setItem('gt_sync_label', label);
+
+    statusEl.textContent = "📡 Conectando ao servidor Render...";
     statusEl.style.color = "var(--gold)";
 
-    // 1. BUSCA DADOS EXISTENTES (UIDs e Resina)
-    const account = await CloudSync.fetchFromRender(label);
+    try {
+        const account = await CloudSync.fetchFromRender(label);
 
-      if (account) {
-        // --- PARTE A: PUXAR DA NUVEM PARA O PC ---
-        if (account.sitedata && account.sitedata !== "") {
-            try {
-                const cloudBackup = JSON.parse(account.sitedata);
-                // Salva TUDO o que veio da nuvem no computador atual
-                Object.entries(cloudBackup).forEach(([key, value]) => {
-                    localStorage.setItem(key, value);
-                });
-                console.log("Restaurado da nuvem: Pity, Histórico e Countdowns.");
-            } catch (e) {
-                console.error("Erro ao processar backup da nuvem:", e);
+        if (account) {
+            // --- RESTAURAÇÃO (Nuvem -> PC) ---
+            if (account.sitedata) {
+                try {
+                    const cloudBackup = JSON.parse(account.sitedata);
+                    Object.entries(cloudBackup).forEach(([key, value]) => {
+                        localStorage.setItem(key, value);
+                    });
+                } catch (e) { console.error("Erro no parse do sitedata"); }
             }
-        }
-         const fullLocalData = {};
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key.startsWith('gt_')) {
-                fullLocalData[key] = localStorage.getItem(key);
+
+            // --- BACKUP (PC -> Nuvem) ---
+            const fullLocalData = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('gt_')) fullLocalData[key] = localStorage.getItem(key);
             }
-        }
-        try {
+
             await fetch(`${RENDER_URL}/save/${encodeURIComponent(label)}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(localData)
+                body: JSON.stringify(fullLocalData)
             });
-            console.log("Backup enviado para a planilha.");
-        } catch (e) {
-            console.error("Erro ao salvar backup:", e);
-        }
 
-        // 3. SE A PLANILHA JÁ TINHA UM BACKUP, RESTAURA PARA O NAVEGADOR
-        if (account.sitedata) {
-            try {
-                const cloudPity = JSON.parse(account.sitedata);
-                Object.entries(cloudPity).forEach(([key, value]) => {
-                    localStorage.setItem("gt_" + key, value);
-                });
-            } catch (e) {}
-        }
+            statusEl.textContent = "✅ Sincronização Total Ativa!";
+            statusEl.style.color = "var(--green)";
+            CloudSync.lockUI(true);
 
-        // 4. FINALIZA INTERFACE
-        localStorage.setItem('gt_sync_label', label);
-        statusEl.textContent = "✅ Nuvem 100% Sincronizada!";
-        statusEl.style.color = "var(--green)";
-        CloudSync.lockUI(true);
-        
-       // Atualiza todos os cards de Pity, Histórico e Resina visualmente
-        GAMES.forEach(g => {
-            refreshPity(g.id);
-            renderHistory(g.id);
-            // Reinicia countdowns se necessário
-            const ts = localStorage.getItem(`gt_${g.id}_ts`);
-            if (ts) startCountdown(g.id, parseInt(ts));
-        });
-        
-        updateLiveStatusUI(); // Atualiza resina/diárias
-        
-    } else {
-        statusEl.textContent = "❌ ID não encontrado.";
-        statusEl.style.color = "var(--red)";
+            // Força atualização visual
+            GAMES.forEach(g => { refreshPity(g.id); renderHistory(g.id); });
+            updateLiveStatusUI();
+            
+        } else {
+            statusEl.textContent = "❌ ID não encontrado na planilha.";
+            statusEl.style.color = "var(--red)";
+            // Se não encontrou no servidor, removemos da memória local para evitar loops de erro
+            localStorage.removeItem('gt_sync_label');
+            CloudSync.lockUI(false);
+        }
+    } catch (err) {
+        statusEl.textContent = "⚠️ Servidor demorando a responder. Tente novamente em instantes.";
+        console.error(err);
     }
 }
     // ── SELECT GAME ──
@@ -3811,34 +3794,38 @@ async function syncByLabel() {
     }
 
     // INICIALIZAÇÃO
-    document.addEventListener('DOMContentLoaded', () => {
-      buildPanels(); // Chame sua função que cria os painéis do tracker
-      if (localStorage.getItem('gt_sync_label')) {
-        const lbl = localStorage.getItem('gt_sync_label');
-        document.getElementById('sync-id-input').value = lbl;
+document.addEventListener('DOMContentLoaded', async () => {
+    buildPanels(); 
+    setupImages();
+
+    const salvo = localStorage.getItem('gt_sync_label');
+    if (salvo) {
+        console.log("Memória encontrada: " + salvo);
+        const input = document.getElementById('sync-id-input');
+        if (input) input.value = salvo;
+        
+        // Bloqueia a UI para indicar que está carregando
         CloudSync.lockUI(true);
-      }
-      function startAutoRefreshLoop() {
-        // Evita duplicar o timer
-        if (liveRefreshTimer) clearInterval(liveRefreshTimer);
+        
+        // Exibe um aviso visual de que o servidor está "acordando"
+        const statusEl = document.getElementById('cloud-status-msg');
+        if (statusEl) {
+            statusEl.textContent = "⏳ Acordando servidor (pode levar 30s)...";
+            statusEl.style.color = "var(--gold)";
+        }
 
-        liveRefreshTimer = setInterval(() => {
-          // Só tenta atualizar se o usuário estiver com a aba Tracker aberta
-          // e se estiver logado na nuvem
-          if (document.getElementById('page-tracker').classList.contains('active')) {
-            console.log("📡 Iniciando atualização automática programada...");
-            updateLiveStatusUI();
-          }
-        }, AUTO_REFRESH_TIME);
-      }
-
-      // Dentro do seu listener que já existe:
-      document.addEventListener('DOMContentLoaded', () => {
-        // ... seus buildPanels() etc ...
-
-        startAutoRefreshLoop(); // <--- Adicione isso aqui
-      });
-    });
+        // Tenta buscar os dados da nuvem assim que abre
+        await updateLiveStatusUI();
+        
+        if (statusEl) {
+            statusEl.textContent = "✅ Nuvem conectada.";
+            statusEl.style.color = "var(--green)";
+        }
+    }
+    
+    // Inicia o loop de atualização automática (a cada 10min)
+    startAutoRefreshLoop();
+});
     // Adicione esta função ao seu objeto CloudSync ou Scripts globais
  async function updateLiveStatusUI() {
     const syncLabel = localStorage.getItem('gt_sync_label');
